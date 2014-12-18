@@ -1,0 +1,251 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+window.onload = function () {
+new DatePicker('fltdate', {  //实例化对象名称：开始日期
+        inputId: 'fltdate',  //日期输入框ID
+        className: 'date-picker-wp',  //CSS类名
+        seprator: '-'  //日期分隔符 （年-月-日）
+    });
+}
+
+$(document).ready(function(){
+    $("input#cneecode").blur(function(){
+		//输入收货人代码后自动显示收货人地址信息
+        var code = $("input#cneecode").val();
+		if(code!==""){
+        	$.getJSON("getaddrhc.php",{code:code},function(json){
+         	   $("textarea#consignee").val(json.addr);
+			});
+		}
+    });
+
+    $("input#notifycode").blur(function(){
+		//输入通知人代码后自动显示通知人地址信息
+        var code = $("input#notifycode").val();
+        if(code!==""){
+        	$.getJSON("getaddrhn.php",{code:code},function(json){
+            	$("textarea#notify").val(json.addr);
+        	});
+        }
+    });
+
+
+    $("input#shippercode").blur(function(){
+		//输入发货人代码后自动显示发货人地址信息
+        var code = $("input#shippercode").val();
+        if(code!==""){
+        	$.getJSON("getaddrhs.php",{code:code},function(json){
+        	    $("textarea#shipper").val(json.addr);
+        	});
+        }
+    });
+
+	$("input#hawb").focus();
+    $("input#cbm").blur(function(){
+		//输入体积后，自动计算并更新收费重量
+    	cbmw=$("input#cbm").val()/0.006;
+    	gw=$("input#gw").val();
+    	cw=Math.round((cbmw>=gw)?cbmw:gw);
+    	$("input#cw").attr("value",cw);
+    });
+
+    $("input#submit").click(function(){
+    	if($("input#fltdate").val()==""){
+			alert("航班日期不得为空！");
+			$("input#fltdate").focus();
+			return false;
+		}
+	});
+});
+</script>
+{/literal}
+<div class="main">
+{if $getprtno=="1"}
+<form method="POST">
+<table class="mawbtab" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse">
+  <colgroup>
+    <col width="220px" />
+    <col width="220px" />
+    <col width="220px" />
+    <col width="220px" />
+  </colgroup>
+  <tr>
+    <td height="20" >Airport of Departure</td>
+    <td>Airport of Destination</td>
+    <td>MAWB No.</td>
+    <td>HAWB No.</td>
+  </tr>
+  <tr>
+    <td height="40"><input id="depar" type="text" name="depar" value="{$depar}" style="text-transform:uppercase;"/></td>
+    <td><input id="desti" type="text" name="desti" value="{$desti}" style="text-transform:uppercase;"/></td>
+    <td><input id="mawb" type="text" name="mawb" value="{$mawb}" readonly=readonly /></td>
+    <td align="center"><span style="color:#000000;font-size:36px;">{$hawb}</span><input id="hawb" type="text" name="hawb" size=12 value="{$hawb}" hidden></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <table width="100%" frame="void" rules="all" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <td colspan="6" align="center">Routing and Destination</td>
+      </tr>
+      <tr>
+        <td width="15%" height="20">To</td>
+        <td width="35%">By First Carrier</td>
+        <td width="15%">to</td>
+        <td width="10%">by</td>
+        <td width="15%">to</td>
+        <td>by</td>
+      </tr>
+      <tr>
+        <td height="25"><input type="text" name="dest" size=3 value="{$dest}" style="text-transform:uppercase;" readonly=readonly></td>
+        <td><input id="fltno" type="text" name="fltno" size=3 value="{$fltno}" style="text-transform:uppercase;" >/<input id="fltdate" type="text" name="fltdate" size=6 value="{$fltdate}" onchange="javascript:if(!/^(19|20)\d{2}(0[1-9]|1[012])$/gi.test(this.value))alert('日期错误');"></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+    </td>
+    <td colspan="2" rowspan="6"></td>
+  </tr>
+  <tr>
+    <td height="20">Consignee's Name and Address</td>
+    <td style="border-bottom: 0px;"><input id="cneecode" type="text" name="cneecode" size="3" style="text-transform:uppercase;"></td>
+  </tr>
+  <tr>
+    <td height="90" colspan="2" style="border-top: 0px;"><textarea id="consignee" name="consignee" cols="45" rows="5" style="text-transform:uppercase;">{$consignee}</textarea></td>
+  </tr>
+  <tr>
+    <td height="20">Also Notify</td>
+    <td style="border-bottom: 0px;"><input id="notifycode" type="text" name="notifycode" size="3" style="text-transform:uppercase;"></td>
+  </tr>
+  <tr>
+    <td height="90" colspan="2" style="border-top: 0px;"><textarea id="notify" name="notify" cols="45" rows="5" style="text-transform:uppercase;">{$notify}</textarea></td>
+  </tr>
+  <tr>
+    <td height="20">Shipper's Name and Address</td>
+    <td style="border-bottom: 0px;"><input id="shippercode" type="text" name="shippercode" size=3 style="text-transform:uppercase;"></td>
+  </tr>
+  <tr>
+    <td height="90" colspan="2" style="border-top: 0px;"><textarea id="shipper" name="shipper" cols="45" rows="5" style="text-transform:uppercase;">{$shipper}</textarea></td>
+    <td colspan="2">
+    EXECUTED ON <input name="opdate" type="text" id="opdate" value="{$opdate}" size="12" onchange="javascript:if(!/^(19|20)\d{2}(0[1-9]|1[012])$/gi.test(this.value))alert('日期错误');">
+    AT <input name="depar" type="text" id="depar" value="{$depar}" size="12" style="text-transform:uppercase;"/>
+    <br><br>
+    SIGNATURE<br>
+    <input id="agentabbr" type="text" name="agentabbr" value="{$agentabbr}" style="text-transform:uppercase;"/>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4" style="padding:0">
+    <table width="100%" frame="void" rules="all" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="8%" height="20">Currency</td>
+        <td colspan="2" width="10%" align="center">WT/VAL</td>
+        <td colspan="2" width="10%" align="center">Other</td>
+        <td width="15%">D.V.for Carriage</td>
+        <td width="15%">D.V.for Custom</td>
+        <td width="12%">Insurance</td>
+        <td width="30%" rowspan="2">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="25"><input name="curr" type="text" id="curr" value="{$curr}" size=4  style="text-transform:uppercase;"/></td>
+        <td width="5%" align="center">{$wtp}</td>
+        <td width="5%" align="center">{$wtc}</td>
+        <td width="5%" align="center">{$otp}</td>
+        <td width="5%" align="center">{$otc}</td>
+        <td><input name="nvd" type="text" id="nvd" value="{$nvd}" size=4 style="text-transform:uppercase;"/></td>
+        <td><input name="ncv" type="text" id="ncv" value="{$ncv}" size=4 style="text-transform:uppercase;"/></td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4" style="padding:0">
+    <table width="100%" frame="void" rules="all" border="1" cellspacing="0" cellpadding="0">
+      <tr align="center">
+        <td width="6%" height="30">No.</td>
+        <td width="9%">G.W.</td>
+        <td width="5%">KG<br>lb</td>
+        <td width="13%" colspan="2">Rate Class</td>
+        <td width="12%">C.W.</td>
+        <td width="8%">Rate/Charge</td>
+        <td width="12%">Total</td>
+        <td width="35%" colspan="2">Nature and Quantity of Goods</td>
+      </tr>
+      <tr>
+        <td height="25" style="border-bottom:0px;"><input type="text" name="package" size=3 value="{$package}" style="text-transform:uppercase;"></td>
+        <td style="border-bottom:0px;">&nbsp;</td>
+        <td style="border-bottom:0px;">&nbsp;</td>
+        <td width="3%" style="border-bottom:0px;">&nbsp;</td>
+        <td width="10%" style="border-bottom:0px;">&nbsp;</td>
+        <td style="border-bottom:0px;">&nbsp;</td>
+        <td style="border-bottom:0px;">&nbsp;</td>
+        <td style="border-bottom:0px;">&nbsp;</td>
+        <td align="center" valign="top" colspan="2" rowspan="6"><textarea name="cgodescp" cols="35" rows="20">{$cgodescp}</textarea><br /><input id="cbm" type="text" name="cbm" size=5 value="{$cbm}" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">&nbsp;CBM</td>
+      </tr>
+      <tr>
+        <td height="150" valign="top" style="border-top:0px;"><input id="num" type="text" name="num" size=3 value="{$num}" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+        <td valign="top" style="border-top:0px;"><input id="gw" type="text" name="gw" size=5 value="{$gw}" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+        <td valign="top" style="border-top:0px;border-bottom:0px;"><input type="text" name="k" size=1 value="K." style="text-transform:uppercase;"></td>
+        <td width="3%" valign="top" style="border-top:0px;border-bottom:0px;"><input id="rclass" type="text" name="rclass" size=1 value="{$rclass}" style="text-transform:uppercase;"></td>
+        <td width="10%" valign="top" style="border-top:0px;border-bottom:0px;">&nbsp;</td>
+        <td valign="top" style="border-top:0px;border-bottom:0px;"><input id="cw" type="text" name="cw" size=5 value="{$cw}" readonly=readonly></td>
+        <td valign="top" style="border-top:0px;border-bottom:0px;"><input id="up" type="text" name="up" size=3 value="{$up}" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+        <td valign="top" style="border-top:0px;"><input id="freight" type="text" name="freight" size=8 value="{$freight}" readonly=readonly></td>
+      </tr>
+      <tr>
+        <td height="25">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td style="border-top:0px;">&nbsp;</td>
+        <td style="border-top:0px;">&nbsp;</td>
+        <td style="border-top:0px;">&nbsp;</td>
+        <td style="border-top:0px;">&nbsp;</td>
+        <td style="border-top:0px;">&nbsp;</td>
+        <td style="border-top:0px;">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="50" colspan="8">Special Handling Information<br />
+        <input type="text" name="special" size=60 value="{$special}" style="text-transform:uppercase;"/></td>
+      </tr>
+      <tr>
+        <td height="50" colspan="3" valign="top">Weight Charge</td>
+        <td colspan="3" rowspan="2" valign="top">Other Charge</td>
+        <td colspan="2" valign="top">Total Other Charge</td>
+      </tr>
+      <tr>
+        <td height="50" colspan="3" valign="top">Valuation Charge</td>
+        <td colspan="2" valign="top">Total Prepaid</td>
+      </tr>
+      <tr>
+        <td height="50" colspan="3" valign="top">Weight Charge</td>
+        <td colspan="5" rowspan="2" valign="top">Other Charge</td>
+        <td valign="top">Total Other Charge</td>
+      </tr>
+      <tr>
+        <td height="50" colspan="3" valign="top">Valuation Charge</td>
+        <td valign="top">Total Collect</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+</table>
+<input id="submit" type="submit" name="saveprthawb" value="保存">
+<a href="prt_hawb_tpl.php?prthawbtpl={$hawb}" target=_blank>打印</a>
+</form>
+{else}
+<form method="GET">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <tr>
+    <td style="width:80px;">输入分单号：</td>
+    <td style="width:120px;"><input id="hawb" type="text" name="prthawb" size=12></td>
+    <td style="width:80px;"><input type="submit" value="制单"></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+{/if}
+</div>
+{include file="footer.tpl.html"}

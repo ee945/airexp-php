@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>总单打印</title>
+<script type="text/javascript" src="common/jquery-1.10.2.js"></script>
+{literal}
+<script type="text/javascript">
+//点击打印按钮后，自动隐藏该按钮，防止被打印出来，第二次打印可刷新后重新显示
+$(document).ready(function(){
+    $("button#print").click(function(){
+        $("div#hide").hide();
+    });
+});
+</script>
+{/literal}
+<style type="text/css">
+body {
+margin:0;font-family:Arial, 黑体, "MS UI Gothic",sans-serif, Helvetica;font-size:12px;
+}
+#mawb {
+position:absolute;left:{$mawb1}px;top:{$mawb2}px;}
+#dest {
+position:absolute;left:{$dest1}px;top:{$dest2}px;}
+#desti {
+position:absolute;left:{$desti1}px;top:{$desti2}px;}
+#depa {
+position:absolute;left:{$depa1}px;top:{$depa2}px;}
+#depar {
+position:absolute;left:{$depar1}px;top:{$depar2}px;}
+#shipper {
+position:absolute;left:{$shipper1}px;top:{$shipper2}px;}
+#consignee {
+position:absolute;left:{$consignee1}px;top:{$consignee2}px;}
+#pay {
+position:absolute;left:{$pay1}px;top:{$pay2}px;}
+#agentabbr {
+position:absolute;left:{$agentabbr1}px;top:{$agentabbr2}px;}
+#agentcode {
+position:absolute;left:{$agentcode1}px;top:{$agentcode2}px;}
+#agentaccount {
+position:absolute;left:{$agentaccount1}px;top:{$agentaccount2}px;}
+#carrier {
+position:absolute;left:{$carrier1}px;top:{$carrier2}px;}
+#curr {
+position:absolute;left:{$curr1}px;top:{$curr2}px;}
+#wpp {
+position:absolute;left:{$wpp1}px;top:{$wpp2}px;}
+#opp {
+position:absolute;left:{$opp1}px;top:{$opp2}px;}
+#nvd {
+position:absolute;left:{$nvd1}px;top:{$nvd2}px;}
+#ncv {
+position:absolute;left:{$ncv1}px;top:{$ncv2}px;}
+#flt {
+position:absolute;left:{$flt1}px;top:{$flt2}px;}
+#insurance {
+position:absolute;left:{$insurance1}px;top:{$insurance2}px;}
+#special {
+position:absolute;left:{$special1}px;top:{$special2}px;}
+#package {
+position:absolute;left:{$package1}px;top:{$package2}px;}
+#num {
+position:absolute;left:{$num1}px;top:{$num2}px;}
+#numb {
+position:absolute;left:{$numb1}px;top:{$numb2}px;}
+#gw {
+position:absolute;left:{$gw1}px;top:{$gw2}px;}
+#gwb {
+position:absolute;left:{$gwb1}px;top:{$gwb2}px;}
+#kg {
+position:absolute;left:{$kg1}px;top:{$kg2}px;}
+#rclass {
+position:absolute;left:{$rclass1}px;top:{$rclass2}px;}
+#cw {
+position:absolute;left:{$cw1}px;top:{$cw2}px;}
+#up {
+position:absolute;left:{$up1}px;top:{$up2}px;}
+#freight {
+position:absolute;left:{$freight1}px;top:{$freight2}px;}
+#freightb {
+position:absolute;left:{$freightb1}px;top:{$freightb2}px;}
+#aw {
+position:absolute;left:{$aw1}px;top:{$aw2}px;}
+#my {
+position:absolute;left:{$my1}px;top:{$my2}px;}
+#sc {
+position:absolute;left:{$sc1}px;top:{$sc2}px;}
+#other {
+position:absolute;left:{$other1}px;top:{$other2}px;}
+#amount {
+position:absolute;left:{$amount1}px;top:{$amount2}px;}
+#cgodescp {
+position:absolute;left:{$cgodescp1}px;top:{$cgodescp2}px;}
+#cbm {
+position:absolute;left:{$cbm1}px;top:{$cbm2}px;}
+#signature {
+position:absolute;left:{$signature1}px;top:{$signature2}px;}
+#atplace {
+position:absolute;left:{$atplace1}px;top:{$atplace2}px;}
+#operator {
+position:absolute;left:{$operator1}px;top:{$operator2}px;}
+#opdate {
+position:absolute;left:{$opdate1}px;top:{$opdate2}px;}
+#scs {
+position:absolute;left:{$scs1}px;top:{$scs2}px;}
+</style>
+</head>
+<body>
+<div id="hide">
+<a href='javascript:window.print()'><button id="print">打印{$rexcom}</button></a>
+<div id="mawb" style="font-size:20px;">{$mawb}</div>
+</div>
+<div id="dest">{$dest}</div>
+<div id="depa">{$depa}</div>
+<div id="desti">{$desti}</div>
+<div id="depar">{$depar}</div>
+<div id="atplace">{$atplace}</div>
+<div id="shipper">{$shipper}</div>
+<div id="consignee">{$consignee}</div>
+<div id="pay">{$pay}</div>
+<div id="agentabbr">{$agentabbr}</div>
+<div id="signature">{$signature}</div>
+<div id="agentcode">{$agentcode}</div>
+<div id="agentaccount">{$agentaccount}</div>
+<div id="carrier">{$carrier}</div>
+<div id="curr">{$curr}</div>
+<div id="wpp">P</div>
+<div id="opp">P</div>
+<div id="nvd">{$nvd}</div>
+<div id="ncv">{$ncv}</div>
+<div id="flt">{$flt}</div>
+<div id="insurance">{$insurance}</div>
+<div id="special">{$special}</div>
+<div id="package">{$package}</div>
+<div id="num">{$num}</div>
+<div id="numb">{$numb}</div>
+<div id="gw">{$gw}</div>
+<div id="gwb">{$gwb}</div>
+<div id="kg">{$kg}</div>
+<div id="rclass">{$rclass}</div>
+<div id="cw">{$cw}</div>
+<div id="up">{$up}</div>
+<div id="freight">{$freight}</div>
+<div id="freightb">{$freightb}</div>
+<div id="aw">{$aw}</div>
+<div id="my">{$my}</div>
+<div id="sc">{$sc}</div>
+<div id="other">{$other}</div>
+<div id="amount">{$amount}</div>
+<div id="cgodescp">{$cgodescp}</div>
+<div id="cbm">{$cbm}</div>
+<div id="operator">{$operator}</div>
+<div id="opdate">{$opdate}</div>
+<div id="scs">{$scs}</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("input#hawb").focus();
+});
+//打印处理函数
+function preview(){
+	bdhtml=window.document.body.innerHTML;
+	sprnstr="<!--startprint"+"-->";
+	eprnstr="<!--endprint"+"-->";
+	prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17);
+	prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));
+	window.document.body.innerHTML=prnhtml;
+	window.print();
+}
+</script>
+{/literal}
+<div class="main">
+{if $getmawbno=="1"}
+<!--startprint-->
+<table border="1" cellpadding="0" cellspacing="0" style="width:960px;border-collapse:collapse;">
+  <tr>
+    <td width="25%" align="center" style="padding:3px 5px;">Air Freight Agent</td>
+    <td width="15%" align="center" style="padding:3px 5px;">Master AWB No.</td>
+    <td width="15%" align="center" style="padding:3px 5px;">Port of Discharge</td>
+    <td width="15%" align="center" style="padding:3px 5px;">Total No.of Shipment</td>
+    <td width="15%" align="center" style="padding:3px 5px;">Flight No.</td>
+    <td width="15%" align="center" style="padding:3px 5px;">Date</td>
+  </tr>
+  <tr>
+    <td style="padding:3px 5px;">{$mconsignee}</td>
+    <td style="padding:3px 5px;">{$mawb}</span></td>
+    <td style="padding:3px 5px;">{$dest}</span></td>
+    <td style="padding:3px 5px;">{$hcount}</span></td>
+    <td style="padding:3px 5px;">{$fltno}</td>
+    <td style="padding:3px 5px;">{$fltdate}</td>
+  </tr>
+</table>
+<br />
+<table width="80%" border="1" cellspacing="0" cellpadding="0" style="width:960px;border-collapse:collapse;">
+  <tr>
+    <td width="6%" style="padding:3px 5px;"> Hawb No.</td>
+    <td width="6%" style="padding:3px 5px;"> No. of Pkg</td>
+    <td width="8%" style="padding:3px 5px;"> WT. in Kilo(Lb)</td>
+    <td width="16%" style="padding:3px 5px;"> Nature of Goods</td>
+    <td width="8%" style="padding:3px 5px;"> Port of Lading</td>
+    <td width="8%" style="padding:3px 5px;"> Final Dest</td>
+    <td width="18%" style="padding:3px 5px;">Name &amp; Address of Shipper</td>
+    <td width="18%" style="padding:3px 5px;">Name &amp; Address of Consignee</td>
+    <td width="12%" style="padding:3px 5px;">For Offical Use Only</td>
+  </tr>
+  {section name=m loop=$m_list}
+  <tr>
+    <td style="padding:3px 5px;">{$m_list[m].hawb}</td>
+    <td style="padding:3px 5px;">{$m_list[m].num}</td>
+    <td style="padding:3px 5px;">{$m_list[m].gw}</td>
+    <td style="padding:3px 5px;">{$m_list[m].cgodescp}</td>
+    <td style="padding:3px 5px;">{$m_list[m].depa}</td>
+    <td style="padding:3px 5px;">{$m_list[m].dest}</td>
+    <td style="padding:3px 5px;">{$m_list[m].shipper}</td>
+    <td style="padding:3px 5px;">{$m_list[m].consignee}</td>
+    <td style="padding:3px 5px;"></td>
+  </tr>
+  {/section}
+  <tr>
+    <td style="padding:3px 5px;">TOTAL:</td>
+    <td style="padding:3px 5px;">{$amount_num}</td>
+    <td style="padding:3px 5px;">{$amount_gw}</td>
+    <td style="padding:3px 5px;" colspan=6></td>
+  </tr>
+</table>
+<!--endprint-->
+<form method="POST" action="manifest_xls.php">
+<input type="text" name="manimawbxls" value="{$mawb}" hidden="hidden">
+<input type="submit" value="导出清单"><input type="button" name="print" value="预览并打印" onclick="preview()">
+</form>
+{else}
+<form method="GET">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <tr>
+    <td style="width:80px;">输入总单号：</td>
+    <td style="width:120px;"><input id="mawb" type="text" name="manimawb" size=12></td>
+    <td style="width:80px;"><input type="submit" value="清单制作"></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+{/if}
+</div>
+{include file="footer.tpl.html"}

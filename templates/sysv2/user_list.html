@@ -1,0 +1,29 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+</script>
+{/literal}
+<div class="main">
+<table class="tlist" border=1>
+  <tr>
+    <th width="80px">用户名</th>
+    <th width="80px">昵称</th>
+    <th width="100px">公司部门</th>
+    <th width="130px">注册日期</th>
+    <th width="130px">上次登录</th>
+    <th width="120px">备注</th>
+  </tr>
+  {section name=r loop=$u_list}
+  <tr>
+    <td><a href="user_edit.php?editid={$u_list[r].id}">{$u_list[r].name}</a></td>
+    <td>{$u_list[r].nick}</td>
+    <td>{$u_list[r].dept}</td>
+    <td>{$u_list[r].regdate}</td>
+    <td>{$u_list[r].lastdate}</td>
+    <td>{$u_list[r].remark}</td>
+  </tr>
+  {/section}
+</table>
+</div>
+{include file="footer.tpl.html"}

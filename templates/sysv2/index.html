@@ -1,0 +1,189 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("button#prt").click(function(){
+        if(confirm("准备制作分单？")==false){
+            return false;
+        }
+    });
+});
+</script>
+{/literal}
+<div class="main">
+<div id="stats">
+  <table>
+    <tr class="statstr">
+    <td>
+    <div id="stats1">
+        <p style="font-weight:bold;">昨日航班：{$lastday}</p>
+        {if $nolastday=="1"}
+            <p style="color:#FF0000;">没有出货</p>
+        {else}
+            <p>件：{$allnum1}&nbsp;重：{$allgw1}&nbsp;体：{$allcbm1}&nbsp;</p>
+            <p>运单信息</p>
+            <ul>
+            {section name=h loop=$h_list1}
+              <li><a href="hawb_edit.php?hawbno={$h_list1[h].hawb}">{$h_list1[h].hawb}</a>&nbsp;&nbsp;{$h_list1[h].dest}&nbsp;&nbsp;{$h_list1[h].factory}</li>
+            {/section}
+            </ul>
+        {/if}
+    </div>
+    </td>
+    <td>
+    <div id="stats2">
+        <p style="font-weight:bold;">今日航班：{$today}</p>
+        {if $notoday=="1"}
+            <p style="color:#FF0000;">没有出货</p>
+        {else}
+            <p>件：{$allnum2}&nbsp;重：{$allgw2}&nbsp;体：{$allcbm2}&nbsp;</p>
+            <p>运单信息</p>
+            <ul>
+            {section name=h loop=$h_list2}
+              <li><a href="hawb_edit.php?hawbno={$h_list2[h].hawb}">{$h_list2[h].hawb}</a>&nbsp;&nbsp;{$h_list2[h].dest}&nbsp;&nbsp;{$h_list2[h].factory}</li>
+            {/section}
+            </ul>
+        {/if}
+    </div>
+    </td>
+    <td>
+    <div id="stats3">
+        <p style="font-weight:bold;">明日航班：{$nextday}</p>
+        {if $nonextday=="1"}
+            <p style="color:#FF0000;">暂无出货</p>
+        {else}
+            <p>件：{$allnum3}&nbsp;重：{$allgw3}&nbsp;体：{$allcbm3}&nbsp;</p>
+            <p>运单信息</p>
+            <ul>
+            {section name=h loop=$h_list3}
+              <li><a href="hawb_edit.php?hawbno={$h_list3[h].hawb}">{$h_list3[h].hawb}</a>&nbsp;&nbsp;{$h_list3[h].dest}&nbsp;&nbsp;{$h_list3[h].factory}</li>
+            {/section}
+            </ul>
+        {/if}
+    </div>
+    </td>
+    </tr>
+  </table>
+</div>
+<div id="prealert">
+    <div id="pretomorrow">
+        <p style="font-weight:bold;">明日预报：{$nextday}</p>
+    {if $nonextday=="1"}
+        <p style="color:#FF0000;margin-left:5px;padding-left:10px;">明天暂无出货</p>
+    {else}
+    <table class="tlist" border=1 style="margin-left:15px;">
+      <tr>
+        <th width="60px">分运单号</th>
+        <th width="85px">总运单号</th>
+        <th width="50px">目的港</th>
+        <th width="50px">航班号</th>
+        <th width="40px">件数</th>
+        <th width="60px">实际重量</th>
+        <th width="60px">收费重量</th>
+        <th width="40px">体积</th>
+        <th width="60px">付费方式</th>
+        <th width="60px">货源</th>
+        <th width="70px">生产单位</th>
+        <th width="50px">承运人</th>
+      </tr>
+      {section name=h loop=$h_list3}
+      <tr>
+        <td><a href="hawb_edit.php?hawbno={$h_list3[h].hawb}">{$h_list3[h].hawb}</a></td>
+        <td><a href="prt_mawb.php?prtmawb={$h_list3[h].mawb}">{$h_list3[h].mawb}</a></td>
+        <td>{$h_list3[h].dest}</td>
+        <td>{$h_list3[h].fltno}</td>
+        <td>{$h_list3[h].num}</td>
+        <td>{$h_list3[h].gw}</td>
+        <td>{$h_list3[h].cw}</td>
+        <td>{$h_list3[h].cbm}</td>
+        <td>{$h_list3[h].paymt}</td>
+        <td>{$h_list3[h].forward}</td>
+        <td>{$h_list3[h].factory}</td>
+        <td>{$h_list3[h].carriername}</td>
+      </tr>
+      {/section}
+    </table>
+    {/if}
+    </div>
+    <div id="pretoday">
+        <p style="font-weight:bold;">今日现场：{$today}</p>
+    {if $notoday=="1"}
+        <p style="color:#FF0000;margin-left:5px;padding-left:10px;">今天没有出货</p>
+    {else}
+    <table class="tlist" border=1 style="margin-left:15px;">
+      <tr>
+        <th width="60px">分运单号</th>
+        <th width="85px">总运单号</th>
+        <th width="50px">目的港</th>
+        <th width="50px">航班号</th>
+        <th width="40px">件数</th>
+        <th width="60px">实际重量</th>
+        <th width="60px">收费重量</th>
+        <th width="40px">体积</th>
+        <th width="60px">付费方式</th>
+        <th width="60px">货源</th>
+        <th width="70px">生产单位</th>
+        <th width="50px">承运人</th>
+      </tr>
+      {section name=h loop=$h_list2}
+      <tr>
+        <td><a href="hawb_edit.php?hawbno={$h_list2[h].hawb}">{$h_list2[h].hawb}</a></td>
+        <td><a href="prt_mawb.php?prtmawb={$h_list2[h].mawb}">{$h_list2[h].mawb}</a></td>
+        <td>{$h_list2[h].dest}</td>
+        <td>{$h_list2[h].fltno}</td>
+        <td>{$h_list2[h].num}</td>
+        <td>{$h_list2[h].gw}</td>
+        <td>{$h_list2[h].cw}</td>
+        <td>{$h_list2[h].cbm}</td>
+        <td>{$h_list2[h].paymt}</td>
+        <td>{$h_list2[h].forward}</td>
+        <td>{$h_list2[h].factory}</td>
+        <td>{$h_list2[h].carriername}</td>
+      </tr>
+      {/section}
+    </table>
+    {/if}
+    </div>
+    <div id="prelastday">
+        <p style="font-weight:bold;">昨日出货：{$lastday}</p>
+    {if $nolastday=="1"}
+        <p style="color:#FF0000;margin-left:5px;padding-left:10px;">昨天没有出货</p>
+    {else}
+    <table class="tlist" border=1 style="margin-left:15px;">
+      <tr>
+        <th width="60px">分运单号</th>
+        <th width="85px">总运单号</th>
+        <th width="50px">目的港</th>
+        <th width="50px">航班号</th>
+        <th width="40px">件数</th>
+        <th width="60px">实际重量</th>
+        <th width="60px">收费重量</th>
+        <th width="40px">体积</th>
+        <th width="60px">付费方式</th>
+        <th width="60px">货源</th>
+        <th width="70px">生产单位</th>
+        <th width="50px">承运人</th>
+      </tr>
+      {section name=h loop=$h_list1}
+      <tr>
+        <td><a href="hawb_edit.php?hawbno={$h_list1[h].hawb}">{$h_list1[h].hawb}</a></td>
+        <td><a href="prt_mawb.php?prtmawb={$h_list1[h].mawb}">{$h_list1[h].mawb}</a></td>
+        <td>{$h_list1[h].dest}</td>
+        <td>{$h_list1[h].fltno}</td>
+        <td>{$h_list1[h].num}</td>
+        <td>{$h_list1[h].gw}</td>
+        <td>{$h_list1[h].cw}</td>
+        <td>{$h_list1[h].cbm}</td>
+        <td>{$h_list1[h].paymt}</td>
+        <td>{$h_list1[h].forward}</td>
+        <td>{$h_list1[h].factory}</td>
+        <td>{$h_list1[h].carriername}</td>
+      </tr>
+      {/section}
+    </table>
+    {/if}
+    </div>
+</div>
+</div>
+{include file="footer.tpl.html"}

@@ -1,0 +1,1 @@
+ALTER ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `exp_v_manifest` AS select `exp_hawb`.`hawb` AS `hawb`,`exp_hawb`.`mawb` AS `mawb`,`exp_hawb`.`num` AS `num`,`exp_hawb`.`gw` AS `gw`,`exp_hawb`.`dest` AS `dest`,`exp_hawb`.`shipper` AS `shipper`,`exp_hawb`.`consignee` AS `consignee`,`exp_hawb`.`cgodescp` AS `cgodescp` from `exp_hawb`

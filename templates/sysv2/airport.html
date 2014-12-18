@@ -1,0 +1,217 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("input#submit").click(function(){
+    	if($("input#code").val()==""){
+			alert("目的港代码不得为空！");
+			$("input#code").focus();
+			return false;
+		}
+    	if($("input#name").val()==""){
+			alert("机场全称不得为空！");
+			$("input#name").focus();
+			return false;
+		}
+    	if($("input#zone").val()==""){
+			alert("地区不得为空！");
+			$("input#zone").focus();
+			return false;
+		}
+	});
+});
+</script>
+{/literal}
+<div class="main">
+<form method="POST">
+<table class="tlist">
+  <col width="64" span="10" />
+  <tr height="20">
+    <td width="60" align="right">目的港代码</td>
+    <td width="40"><input type="text" name="s_code" size=3></td>
+    <td width="60" align="right">机场全称</td>
+    <td width="50"><input type="text" name="s_name" size=5></td>
+    <td width="50" align="right">国家地区</td>
+    <td width="60"><input type="text" name="s_zone" size=3></td>
+    <td width="40" align="right"><input type="submit" name="search" value="查询"></td>
+  </tr>
+</table>
+</form>
+{if $list=="1"}
+<div style="margin:10px 0;"><a href="?add=1">添加新目的港</a></div>
+<table id="hawbli" class="tlist" border=1>
+  <tr>
+    <th width="65px">代码</th>
+    <th width="80px">机场</th>
+    <th width="40px">地区</th>
+    <th width="80px">M价</th>
+    <th width="80px">N价</th>
+    <th width="80px">Q价</th>
+    {if $delbtn=="1"}
+    <th width="45px">删除</th>
+    {/if}  </tr>
+  {section name=r loop=$h_list}
+  <tr>
+    <td><a href="?port={$h_list[r].code}">{$h_list[r].code}</a></td>
+    <td>{$h_list[r].name}</td>
+    <td>{$h_list[r].zone}</td>
+    <td align="right">{$h_list[r].m}</td>
+    <td align="right">{$h_list[r].n}</td>
+    <td align="right">{$h_list[r].q}</td>
+    {if $delbtn=="1"}
+    <td><a href="?delid={$h_list[r].id}"><button id="del">del</button></a></td>
+    {/if}  </tr>
+  {/section}
+</table>
+<div id="pagenav">{$pagenav}</div>
+</div>
+{/if}
+{if $update=="1"}
+<hr>
+<form method="POST">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <col span="8" />
+  <tr>
+    <td width="100px">目的港代码</td>
+    <td width="100px"><input id="code" name="code" type="text" size=12 value="{$code}" readonly></td>
+    <td width="100px">&nbsp;</td>
+    <td width="100px">&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>机场全称</td>
+    <td><input id="name" name="name" type="text" value="{$name}" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>国家地区</td>
+    <td><input id="zone" name="zone" type="text" value="{$zone}" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td></tr>
+  <tr>
+    <td>M价</td>
+    <td><input id="m" name="m" type="text" value="{$m}" size=12 onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>N价</td>
+    <td><input id="n" name="n" type="text" value="{$n}" size=12 onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Q价</td>
+    <td><input id="q" name="q" type="text" value="{$q}" size=12 onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="submit" type="submit" name="update" value="更新"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</form>
+{/if}
+{if $add=="1"}
+<hr>
+<form method="POST">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <col span="8" />
+  <tr>
+    <td width="100px">目的港代码</td>
+    <td width="100px"><input id="code" name="code" type="text" size=12 style="text-transform:uppercase;"></td>
+    <td width="100px">&nbsp;</td>
+    <td width="100px">&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>机场全称</td>
+    <td><input id="name" name="name" type="text" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>国家地区</td>
+    <td><input id="zone" name="zone" type="text" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td></tr>
+  <tr>
+    <td>M价</td>
+    <td><input id="m" name="m" type="text" size=12 onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>N价</td>
+    <td><input id="n" name="n" type="text" size=12 onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Q价</td>
+    <td><input id="q" name="q" type="text" size=12 onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="submit" type="submit" name="add" value="添加"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</form>
+{/if}
+</div>
+{include file="footer.tpl.html"}

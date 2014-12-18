@@ -1,0 +1,118 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("input#name").focus();
+
+    $("input#submit").click(function(){
+    	if($("input#name").val()==""){
+			alert("用户名不得为空！");
+			$("input#hawb").focus();
+			return false;
+		}
+		if($("input#pass").val()==""){
+			alert("密码不得为空！");
+			$("input#pass").focus();
+			return false;
+		}
+		if($("input#nick").val()==""){
+			alert("昵称不得为空！");
+			$("input#nick").focus();
+			return false;
+		}
+	});
+});
+</script>
+{/literal}
+<div class="main">
+<form method="POST">
+<div style="float:left">
+<table border=0 cellspacing="0" cellpadding="0" style="width:100%;">
+  <col span="8" />
+  <tr>
+    <td style="width:80px;">用户名</td>
+    <td style="width:100px;"><input id="name" type="text" name="name" size=12></td>
+  </tr>
+  <tr>
+    <td>密码</td>
+    <td><input id="pass" type="password" name="pass" size=12 value=""></td>
+  </tr>
+  <tr>
+    <td>确认密码</td>
+    <td><input id="pass2" type="password" name="pass2" size=12 value=""></td>
+  </tr>
+  <tr>
+    <td>昵称</td>
+    <td><input id="nick" type="text" name="nick" size=12></td>
+  </tr>
+  <tr>
+    <td>公司部门</td>
+    <td><input id="dept" type="text" name="dept" size=12></td>
+  </tr>
+  <tr>
+    <td>注册日期</td>
+    <td><input id="regdate" type="text" name="regdate" size=12 value="{$now}"></td>
+  </tr>
+  <tr>
+    <td>备注</td>
+    <td><textarea name="remark" rows=5 cols=30></textarea></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="submit" type="submit" name="adduser" value="添加"></td>
+  </tr>
+</table>
+</div>
+<div style="">
+<table border=0 cellspacing="0" cellpadding="0" style="width:50%;">
+  <col span="8" />
+  <tr>
+    <td style="width:80px;">操作权限</td>
+    <td style="width:300px;"></td>
+  </tr>
+  <tr>
+    <td colspan=2>
+      <input type="checkbox" name="grade[]" value ="1">查询&nbsp;
+      <input type="checkbox" name="grade[]" value ="2">添加&nbsp;
+      <input type="checkbox" name="grade[]" value ="3">修改&nbsp;
+      <input type="checkbox" name="grade[]" value ="4">删除
+    </td>
+  </tr>
+  <tr>
+    <td colspan=2>
+      <input type="checkbox" name="grade[]" value ="5">报表&nbsp;
+      <input type="checkbox" name="grade[]" value ="6">统计&nbsp;
+      <input type="checkbox" name="grade[]" value ="7">结算&nbsp;
+      <input type="checkbox" name="grade[]" value ="8">备份
+    </td>
+  </tr>
+  <tr>
+    <td>访问权限</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan=2>
+      <input type="checkbox" name="access[]" value ="1">报关清单&nbsp;
+      <input type="checkbox" name="access[]" value ="2">仓储数据&nbsp;
+      <input type="checkbox" name="access[]" value ="3">海外报表&nbsp;
+      <input type="checkbox" name="access[]" value ="4">分单数据
+    </td>
+  </tr>
+  <tr>
+    <td colspan=2>
+      <input type="checkbox" name="access[]" value ="5">财务结算&nbsp;
+      <input type="checkbox" name="access[]" value ="6">附加数据&nbsp;
+      <input type="checkbox" name="access[]" value ="7">用户管理&nbsp;
+      <input type="checkbox" name="access[]" value ="8">数据导出
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</div>
+</form>
+</div>
+{include file="footer.tpl.html"}

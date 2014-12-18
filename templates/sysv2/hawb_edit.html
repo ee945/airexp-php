@@ -1,0 +1,167 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+window.onload = function () {
+new DatePicker('fltdate', {  //实例化对象名称：开始日期
+        inputId: 'fltdate',  //日期输入框ID
+        className: 'date-picker-wp',  //CSS类名
+        seprator: '-'  //日期分隔符 （年-月-日）
+    });
+new DatePicker('opdate', {  //实例化对象名称：结束日期
+        inputId: 'opdate',
+        className: 'date-picker-wp',
+        seprator: '-'
+    });
+}
+
+$(document).ready(function(){
+    $("input#dest").blur(function(){
+		//输入目的港三字代码自动显示目的港全称
+        var code = $("input#dest").val();
+        $.getJSON("getport.php",{code:code},function(json){
+            $("input#desti").val(json.name);
+        });
+    });
+
+    $("input#forwardcode").blur(function(){
+		//输入货源代码自动显示货源名称
+        var code = $("input#forwardcode").val();
+		if(code!==""){
+        	$.getJSON("getforward.php",{code:code},function(json){
+        	    $("input#forward").val(json.name);
+        	});
+        }
+    });
+
+    $("input#forward").blur(function(){
+		//根据当前货源名称，自动查找所属揽货人（销售管理）
+        var forward = $("input#forward").val();
+		if(forward!==""){
+        	$.getJSON("getseller.php",{forward:forward},function(json){
+        	    $("input#seller").val(json.seller);
+        	});
+        }
+    });
+
+    $("input#factorycode").blur(function(){
+		//输入生产单位代码自动显示生产单位名称
+        var code = $("input#factorycode").val();
+		if(code!==""){
+        	$.getJSON("getfactory.php",{code:code},function(json){
+        	    $("input#factory").val(json.name);
+        	});
+        }
+    });
+
+    $("input#carrier").blur(function(){
+		//输入承运人代码自动显示承运人名称
+        var code = $("input#carrier").val();
+        $.getJSON("getcarrier.php",{code:code},function(json){
+            $("input#carriername").val(json.name);
+        });
+    });
+
+    $("input#submit").click(function(){
+    	if($("input#carriername").val()==""){
+			alert("请输入正确的承运人代码！");
+			$("input#carrier").focus();
+			return false;
+		}
+    	if($("input#cbm").val()==0){
+			alert("体积必须大于0！");
+			$("input#cbm").focus();
+			return false;
+		}
+    	if($("input#paymt").val()==""){
+			alert("付费方式不得为空！");
+			$("input#paymt").focus();
+			return false;
+		}
+	});
+    $("input#cbm").blur(function(){
+		//输入体积自动处理收费重量
+    	cbmw=$("input#cbm").val()/0.006;
+    	gw=$("input#gw").val();
+    	cw=Math.round((cbmw>=gw)?cbmw:gw);
+    	$("input#cw").attr("value",cw);
+    	$("input#cw").attr("style","color:#000000");
+    });
+});
+</script>
+{/literal}
+<div class="main">
+<form method="POST">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <col span="8" />
+  <tr>
+    <td style="width:80px;">操作日期</td>
+    <td style="width:25%;"><input id="opdate" type="text" name="opdate" value="{$opdate}"size=12></td>
+    <td style="width:80px;"></td>
+    <td style="width:25%;"></td>
+    <td style="width:80px;"></td>
+    <td style="width:25%;"></td>
+  </tr>
+  <tr>
+    <td>分单号</td>
+    <td><input id="hawb" type="text" name="hawb" size=12 value="{$hawb}" readonly></td>
+    <td>总单号</td>
+    <td><input id="mawb" type="text" name="mawb" onblur=ismawb() size=12 value="{$mawb}"></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>目的港</td>
+    <td><input id="dest" type="text" name="dest" size=1 value="{$dest}" style="text-transform:uppercase;">&nbsp;<input id="desti" type="text" name="desti" size=4 value="{$desti}" style="text-transform:uppercase;"></td>
+    <td>航班号</td>
+    <td><input type="text" name="fltno" size=12 value="{$fltno}" style="text-transform:uppercase;"></td>
+    <td>航班日期</td>
+    <td><input id="fltdate" type="text" name="fltdate" size=12 value="{$fltdate}"></td>
+  </tr>
+  <tr>
+    <td>货源</td>
+    <td><input id="forwardcode" type="text" name="forwardcode" size=1 style="text-transform:uppercase;">&nbsp;<input id="forward" type="text" name="forward" size=3 value="{$forward}">&nbsp;<input id="seller" type="text" name="seller" size=3 value="{$seller}"></td>
+    <td>生产单位</td>
+    <td><input id="factorycode" type="text" name="factorycode" size=1 style="text-transform:uppercase;">&nbsp;<input id="factory" type="text" name="factory" size=4 value="{$factory}"></td>
+    <td>承运方</td>
+    <td><input id="carrier" type="text" name="carrier" size=1 style="text-transform:uppercase;" value="{$carrier}">&nbsp;<input id="carriername" type="text" name="carriername" size=4 value="{$carriername}" readonly=readonly></td>
+  <tr>
+    <td>件数</td>
+    <td><input id="num" type="text" name="num" size=12 value="{$num}" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+    <td>重量</td>
+    <td><input id="gw" type="text" name="gw" size=12 value="{$gw}" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"></td>
+    <td>体积</td>
+    <td><input id="cbm" type="text" name="cbm" size=2 value="{$cbm}" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"> <input id="cw" type="text" name="cw" style="color:#999999;" readonly=readonly size=4  value="{$cw}"></td>
+  </tr>
+  <tr>
+    <td>付费方式</td>
+    <td><input id="paymt" type="text" name="paymt" onblur=ispaymt() size=12 value="{$paymt}" style="text-transform:uppercase;"></td>
+    <td>价格显示</td>
+    <td><input id="arranged" type="radio" name="arranged" {$arranged0} value="0">不显示&nbsp;<input id="arranged" type="radio" name="arranged" {$arranged1} value="1">显示</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>备注</td>
+    <td colspan="5"><textarea name="remark" rows=5 cols=30>{$remark}</textarea></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+    <tr>
+    <td></td>
+    <td><input id="submit" type="submit" name="edithawb" value="更新">&nbsp;<a href="prt_hawb.php?prthawb={$hawb}">打印分单</a></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</form>
+</div>
+{include file="footer.tpl.html"}

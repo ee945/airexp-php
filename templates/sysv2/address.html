@@ -1,0 +1,192 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("input#submit").click(function(){
+    	if($("input#code").val()==""){
+			alert("代码不得为空！");
+			$("input#code").focus();
+			return false;
+		}
+    	if($("input#name").val()==""){
+			alert("名称不得为空！");
+			$("input#name").focus();
+			return false;
+		}
+	});
+	$("button#del").click(function(){
+        if(confirm("确认删除？")==false){
+            return false;
+        }
+    });
+});
+</script>
+{/literal}
+<div class="main">
+<form method="POST">
+<table class="tlist">
+  <col width="64" span="10" />
+  <tr height="20">
+    <td width="40" align="right">代码</td>
+    <td width="60"><input type="text" name="s_code" size=5></td>
+    <td width="40" align="right">名称</td>
+    <td width="60"><input type="text" name="s_name" size=5></td>
+    <td width="40" align="right">类别</td>
+    <td width="100"><select name="s_cata">
+      <option value="">&nbsp;</option>
+      <option value="分单收货人">分单收货人</option>
+      <option value="分单发货人">分单发货人</option>
+      <option value="分单通知人">分单通知人</option>
+      <option value="总单收货人">总单收货人</option>
+      <option value="总单发货人">总单发货人</option>
+    </select></td>
+    <td width="40" align="right">地址</td>
+    <td width="60"><input type="text" name="s_addr" size=5></td>
+    <td width="60" align="right"><input type="submit" name="search" value="查询"></td>
+  </tr>
+</table>
+</form>
+{if $list=="1"}
+<div style="margin:10px 0;"><a href="?add=1">添加新地址</a></div>
+<table id="hawbli" class="tlist" border=1>
+  <tr>
+    <th width="65px">代码</th>
+    <th width="95px">名称</th>
+    <th width="80px">分类</th>
+    <th width="200px">地址</th>
+    {if $delbtn=="1"}
+    <th width="45px">删除</th>
+    {/if}  </tr>
+  {section name=r loop=$h_list}
+  <tr>
+    <td><a href="?addressid={$h_list[r].id}">{$h_list[r].code}</a></td>
+    <td>{$h_list[r].name}</td>
+    <td>{$h_list[r].cata}</td>
+    <td>{$h_list[r].addr}</td>
+    {if $delbtn=="1"}
+    <td><a href="?delid={$h_list[r].id}"><button id="del">del</button></a></td>
+    {/if}  </tr>
+  {/section}
+</table>
+<div id="pagenav">{$pagenav}</div>
+</div>
+{/if}
+{if $update=="1"}
+<hr>
+<form method="POST">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <col span="8" />
+  <tr>
+    <td>代码</td>
+    <td><input id="code" type="text" name="code" size=12 value="{$code}" readonly></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>名称</td>
+    <td><input id="name" name="name" type="text" value="{$name}" size=12></td>
+    <td><input id="id" name="id" type="text" value="{$id}" hidden></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>类别</td>
+    <td>
+        <input type="radio" name="cata" {$hcnee} id="hcnee" value="分单收货人">分单收货人&nbsp;&nbsp;
+        <input type="radio" name="cata" {$hshipper} id="hshipper" value="分单发货人">分单发货人&nbsp;&nbsp;
+        <input type="radio" name="cata" {$hnotify} id="hnotify" value="分单通知人">分单通知人<br>
+        <input type="radio" name="cata" {$mcnee} id="mcnee" value="总单收货人">总单收货人&nbsp;&nbsp;
+        <input type="radio" name="cata" {$mshipper} id="mshipper" value="总单发货人">总单发货人
+    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>地址</td>
+    <td colspan="5"><textarea id="addr" name="addr" rows=5 cols=40>{$addr}</textarea></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+    <tr>
+    <td></td>
+    <td><input id="submit" type="submit" name="update" value="更新"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</form>
+{/if}
+{if $add=="1"}
+<hr>
+<form method="POST">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <col span="8" />
+  <tr>
+    <td>代码</td>
+    <td><input id="code" type="text" name="code" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>名称</td>
+    <td><input id="name" name="name" type="text" size=12></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>类别</td>
+    <td>
+        <input type="radio" name="cata" {$hcnee} id="hcnee" value="分单收货人">分单收货人&nbsp;&nbsp;
+        <input type="radio" name="cata" {$hshipper} id="hshipper" value="分单发货人">分单发货人&nbsp;&nbsp;
+        <input type="radio" name="cata" {$hnotify} id="hnotify" value="分单通知人">分单通知人<br>
+        <input type="radio" name="cata" {$mcnee} id="mcnee" value="总单收货人">总单收货人&nbsp;&nbsp;
+        <input type="radio" name="cata" {$mshipper} id="mshipper" value="总单发货人">总单发货人
+    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>地址</td>
+    <td colspan="5"><textarea id="addr" name="addr" rows=5 cols=40></textarea></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+    <tr>
+    <td></td>
+    <td><input id="submit" type="submit" name="add" value="添加"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</form>
+{/if}
+</div>
+{include file="footer.tpl.html"}

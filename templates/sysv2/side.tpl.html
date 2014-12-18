@@ -1,0 +1,105 @@
+<div class="left" id="LeftBox">
+	<div class="left01">
+		<div class="left01_right"></div>
+		<div class="left01_left"></div>
+		<div class="left01_c" style="font-size:14px;">{$dept}：{$nick}</div>
+	</div>
+	<div class="left02">
+		<div class="left02top">
+			<div class="left02top_right"></div>
+			<div class="left02top_left"></div>
+			<a onclick="show_menu('Bdi010')" href="javascript:;"><div class="left02top_c">常用操作</div></a>
+		</div>
+  		<div class="left02down" id="Bdi010">
+			<div class="left02down01"><a href="hawb_add.php"><div class="left02down05_img"></div>分单输入</a></div>
+			<div class="left02down01"><a href="hawb_list.php"><div class="left02down05_img"></div>分单列表</a></div>
+			<div class="left02down01"><a href="mawb_list.php"><div class="left02down05_img"></div>总单列表</a></div>
+			<div class="left02down01"><a href="rpt_dailyqty.php"><div class="left02down05_img"></div>每日货量</a></div>
+			<div class="left02down01"><a href="rpt_qty.php"><div class="left02down05_img"></div>货量统计</a></div>
+			<div class="left02down01"><a href="rpt_hyqty.php"><div class="left02down05_img"></div>货源统计</a></div>
+		</div>
+	</div>
+	<div class="left02" style="display:none;">
+		<div class="left02top">
+			<div class="left02top_right"></div>
+			<div class="left02top_left"></div>
+			<a onclick="show_menu('Bdi020')" href="javascript:;"><div class="left02top_c">基本单证</div></a>
+		</div>
+	  <div  id="Bdi020" class="left02down">
+			<div class="left02down01"><a onclick="show_menuB(21)" href="javascript:;">
+			  <div id="Bf021" class="left02down01_img"></div>分单管理</a></div>
+			<div class="left02down01_xia noneBox" id="Bli021">
+				<ul>
+					<li><a href="hawb_add.php">&middot;分单输入</a></li>
+					<li><a href="hawb_list.php">&middot;分单查询</a></li>
+				</ul>
+			</div>
+		    <div class="left02down01"><a onclick="show_menuB(22)" href="javascript:;">
+		      <div id="Bf022" class="left02down01_img"></div>总单管理</a>
+		    </div>
+			<div class="left02down01_xia noneBox" id="Bli022">
+				<ul>
+					<li><a href="#">&middot;总单生成</a></li>
+					<li><a href="#">&middot;总单查询</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="left02">
+		<div class="left02top">
+			<div class="left02top_right"></div>
+			<div class="left02top_left"></div>
+			<a onclick="show_menu('Bdi040')" href="javascript:;"><div class="left02top_c">打印模块</div></a>
+		</div>
+  		<div class="left02down" id="Bdi040">
+			<div class="left02down01"><a href="prt_hawb.php"><div class="left02down05_img"></div>分单打印</a></div>
+			<div class="left02down01"><a href="prt_mawb.php"><div class="left02down05_img"></div>总单打印</a></div>
+			<div class="left02down01"><a href="manifest.php"><div class="left02down05_img"></div>清单打印</a></div>
+		</div>
+	</div>
+	<div class="left02">
+		<div class="left02top">
+			<div class="left02top_right"></div>
+			<div class="left02top_left"></div>
+			<a onclick="show_menu('Bdi060')" href="javascript:;"><div class="left02top_c">其他功能</div>
+		</div>
+		<div class="left02down" id="Bdi060">
+			<div class="left02down01"><a onclick="show_menuB(61)" href="javascript:;">
+			  <div id="Bf061" class="left02down01_img"></div>附加数据</a></div>
+			<div class="left02down01_xia noneBox" id="Bli061">
+				<ul>
+					<li><a href="address.php">&middot;收发货人库</a></li>
+					<li><a href="airport.php">&middot;目的港管理</a></li>
+					<li><a href="client.php">&middot;客户管理</a></li>
+					<li><a href="seller.php">&middot;销售管理</a></li>
+					<li><a href="system.php">&middot;系统参数</a></li>
+				</ul>
+			</div>
+			<div class="left02down01"><a onclick="show_menuB(62)" href="javascript:;">
+			  <div id="Bf062" class="left02down01_img"></div>用户管理</a></div>
+			<div class="left02down01_xia noneBox" id="Bli062">
+				<ul>
+					<li><a href="user_add.php">&middot;添加用户</a></li>
+					<li><a href="user_list.php">&middot;用户列表</a></li>
+				</ul>
+			</div>
+			<div class="left02down01"><a onclick="show_menuB(63)" href="javascript:;">
+			  <div id="Bf063" class="left02down01_img"></div>备份</a></div>
+			<div class="left02down01_xia noneBox" id="Bli063">
+				<ul>
+					<li><a href="bak_hawb_xls.php">&middot;分单数据表</a></li>
+					<li><a href="#">&middot;其他备份表</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="left01">
+		<div class="left03_right"></div>
+		<div class="left01_left"></div>
+		<A onClick="return confirm('提示：您确定要退出系统吗？')" href="login.php?action=logout"  target=_parent><div class="left03_c">安全退出</div></a>
+	</div>
+</div>
+<div class="rrcc" id="RightBox">
+<div class="center" id="Mobile" onclick="show_menuC()"></div>
+<div class="right">
+<div class="right01"><img src="images/html/04.gif" /> 我的位置 &gt; <span>{$position}</span></div>

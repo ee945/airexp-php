@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//Dtd XHTML 1.0 transitional//EN" "http://www.w3.org/tr/xhtml1/Dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户登录</title>
+<script type="text/javascript" src="common/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("input#name").focus();
+});
+</script>
+</head>
+<body>
+<div id="man_zone">
+  <table width="30%" border="1" align="center"  cellpadding="3" cellspacing="0" class="table" style="margin-top:100px;">
+    <tr>
+      <th align="center" style="background:#f4f5eb">用户登录</th>
+    </tr>
+    <tr>
+      <td align="center">
+        <form method="post">
+        <table cellSpacing=0 cellPadding=2 border=0>
+          <tbody>
+          <tr>
+            <td style="HEIGHT: 28px;font-size:12px;">用户名：</td>
+            <td style="HEIGHT: 28px"><input id="name" style="WIDTH: 130px" name="name"></td>
+        	</tr>
+          <tr>
+            <td style="HEIGHT: 28px;font-size:12px;">密&nbsp;&nbsp;码：</td>
+            <td style="HEIGHT: 28px"><input style="WIDTH: 130px" type=password name="pass"></td>
+          </tr>
+          <tr>
+            <td colspan=2 align="center"><input type="submit" value="登录"></td>
+          </tr>
+          </tbody>
+        </table>
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,140 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("input#submit").click(function(){
+    	if($("input#forward").val()==""){
+			alert("货源不得为空！");
+			$("input#forward").focus();
+			return false;
+		}
+    	if($("input#seller").val()==""){
+			alert("揽货人不得为空！");
+			$("input#seller").focus();
+			return false;
+		}
+	});
+});
+</script>
+{/literal}
+<div class="main">
+<form method="POST">
+<table class="tlist">
+  <col width="60" span="10" />
+  <tr height="20">
+    <td width="40" align="right">货源</td>
+    <td width="40"><input type="text" name="s_forward" size=3></td>
+    <td width="40" align="right">揽货人</td>
+    <td width="40"><input type="text" name="s_seller" size=3></td>
+    <td width="40" align="right">备注</td>
+    <td width="40"><input type="text" name="s_remark" size=3></td>
+    <td width="40" align="right"><input type="submit" name="search" value="查询"></td>
+  </tr>
+</table>
+</form>
+{if $list=="1"}
+<div style="margin:10px 0;"><a href="?add=1">添加销售</a></div>
+<table id="hawbli" class="tlist" border=1>
+  <tr>
+    <th width="65px">货源</th>
+    <th width="80px">揽货人</th>
+    {if $delbtn=="1"}
+    <th width="45px">删除</th>
+    {/if}  </tr>
+  {section name=r loop=$h_list}
+  <tr>
+    <td><a href="?forward={$h_list[r].forward}">{$h_list[r].forward}</a></td>
+    <td>{$h_list[r].seller}</td>
+    {if $delbtn=="1"}
+    <td><a href="?delid={$h_list[r].id}"><button id="del">del</button></a></td>
+    {/if}  </tr>
+  {/section}
+</table>
+<div id="pagenav">{$pagenav}</div>
+</div>
+{/if}
+{if $update=="1"}
+<hr>
+<form method="POST">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <col span="8" />
+  <tr>
+    <td width="60px">货源</td>
+    <td width="60px"><input id="forward" name="forward" type="text" size=12 value="{$forward}" readonly></td>
+    <td width="60px">&nbsp;</td>
+    <td width="60px">&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>揽货人</td>
+    <td><input id="seller" name="seller" type="text" value="{$seller}" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>备注</td>
+    <td><input id="remark" name="remark" type="text" value="{$remark}" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td></tr>
+  <tr>
+    <td></td>
+    <td><input id="submit" type="submit" name="update" value="更新"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</form>
+{/if}
+{if $add=="1"}
+<hr>
+<form method="POST">
+<table cellspacing="0" cellpadding="0" style="width:100%;">
+  <col span="8" />
+  <tr>
+    <td width="60px">货源</td>
+    <td width="60px"><input id="forward" name="forward" type="text" size=12 style="text-transform:uppercase;"></td>
+    <td width="60px">&nbsp;</td>
+    <td width="60px">&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>揽货人</td>
+    <td><input id="seller" name="seller" type="text" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>备注</td>
+    <td><input id="remark" name="remark" type="text" size=12 style="text-transform:uppercase;"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr><td></td></tr>
+  <tr>
+    <td></td>
+    <td><input id="submit" type="submit" name="add" value="添加"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</form>
+{/if}
+</div>
+{include file="footer.tpl.html"}

@@ -1,0 +1,120 @@
+{include file="header.tpl.html"}
+{include file="side.tpl.html"}
+{literal}
+<script type="text/javascript">
+window.onload = function () {
+new DatePicker('flight_start_', {  //实例化对象名称：开始日期
+        inputId: 's_fltdate_s',  //日期输入框ID
+        className: 'date-picker-wp',  //CSS类名
+        seprator: '-'  //日期分隔符 （年-月-日）
+    });
+new DatePicker('flight_end_', {  //实例化对象名称：结束日期
+        inputId: 's_fltdate_e',
+        className: 'date-picker-wp',
+        seprator: '-'
+    });
+}
+
+$(document).ready(function(){
+    $("button#del").click(function(){
+        if(confirm("确认删除？")==false){
+            return false;
+        }
+    });
+	//隔行颜色和鼠标悬停颜色处理
+    $("#hawbli tr").mouseover(function(){
+    	$(this).css("background-color","#ffff88");
+    });
+    $("#hawbli tr").mouseout(function(){
+    	$("#hawbli tr:even").css("background-color","#ffffee");
+    	$("#hawbli tr:odd").css("background-color","#ffffff");
+    });
+
+    $("#hawbli tr:even").css("background-color","#ffffee");
+});
+</script>
+{/literal}
+<div class="main">
+<form method="POST">
+<table class="tlist">
+  <col width="64" span="10" />
+  <tr height="20">
+    <td width="50">分单号</td>
+    <td width="64"><input type="text" name="s_hawb" value="{$s_hawb}" size=10></td>
+    <td width="50">目的港</td>
+    <td width="64"><input type="text" name="s_dest" value="{$s_dest}" size=3 style="text-transform:uppercase;"></td>
+    <td width="50">航班号</td>
+    <td width="64"><input type="text" name="s_fltno" value="{$s_fltno}" size=3 style="text-transform:uppercase;"></td>
+    <td width="50">货源</td>
+    <td width="60"><input type="text" name="s_forward" value="{$s_forward}" size=3></td>
+    <td width="50">生产单位</td>
+    <td width="64"><input type="text" name="s_factory" value="{$s_factory}" size=3></td>
+    <td width="60" style="text-align:right">揽货人</td>
+    <td width="64"><input type="text" name="s_seller" value="{$s_seller}" size=3></td>
+    <td width="50"><input type="submit" name="hsearch" value="查询"></td>
+  </tr>
+  <tr height="20">
+    <td>总单号</td>
+    <td><input type="text" name="s_mawb" value="{$s_mawb}" size=10></td>
+    <td>付费方式</td>
+    <td><input type="text" name="s_paymt" value="{$s_paymt}" size=3 style="text-transform:uppercase;"></td>
+    <td>收货人</td>
+    <td><input type="text" name="s_cnee" value="{$s_cnee}" size=3 style="text-transform:uppercase;"></td>
+    <td>承运人</td>
+    <td><input type="text" name="s_carrier" value="{$s_carrier}" size=3 style="text-transform:uppercase;"></td>
+    <td>航班日期</td>
+    <td><input id="s_fltdate_s" type="text" name="s_fltdate_s" value="{$s_fltdate_s}" size=6></td>
+    <td><input id="s_fltdate_e" type="text" name="s_fltdate_e" value="{$s_fltdate_e}" size=6></td>
+    <td>每页显示：</td>
+    <td style="text-align:right">
+    <input type="text" name="displaypg" size=1 value="{$displaypg}"></td>
+  </tr>
+</table>
+</form>
+<div style="margin:10px 0;">总计：件数&nbsp;{$allnum}&nbsp;&nbsp;实际重量&nbsp;{$allgw}&nbsp;&nbsp;收费重量&nbsp;{$allcw}&nbsp;&nbsp;体积&nbsp;{$allcbm}</div>
+<hr>
+<table id="hawbli" class="tlist" border=1>
+  <tr>
+    <th width="60px">分运单号</th>
+    <th width="85px">总运单号</th>
+    <th width="45px">目的港</th>
+    <th width="50px">航班号</th>
+    <th width="80px">航班日期</th>
+    <th width="40px">件数</th>
+    <th width="60px">实际重量</th>
+    <th width="60px">收费重量</th>
+    <th width="45px">体积</th>
+    <th width="60px">付费方式</th>
+    <th width="60px">货源</th>
+    <th width="70px">生产单位</th>
+    <th width="45px">承运人</th>
+    <th width="80px">操作日期</th>
+    {if $delbtn=="1"}
+    <th width="45px">删除</th>
+    {/if}
+  </tr>
+  {section name=r loop=$h_list}
+  <tr>
+    <td><a href="hawb_edit.php?hawbno={$h_list[r].hawb}">{$h_list[r].hawb}</a></td>
+    <td><a href="prt_mawb.php?prtmawb={$h_list[r].mawb}">{$h_list[r].mawb}</a></td>
+    <td>{$h_list[r].dest}</td>
+    <td>{$h_list[r].fltno}</td>
+    <td>{$h_list[r].fltdate}</td>
+    <td>{$h_list[r].num}</td>
+    <td>{$h_list[r].gw}</td>
+    <td>{$h_list[r].cw}</td>
+    <td>{$h_list[r].cbm}</td>
+    <td>{$h_list[r].paymt}</td>
+    <td>{$h_list[r].forward}</td>
+    <td>{$h_list[r].factory}</td>
+    <td>{$h_list[r].carrier}</td>
+    <td>{$h_list[r].opdate}</td>
+    {if $delbtn=="1"}
+    <td><a href="?delhawb={$h_list[r].hawb}"><button id="del">del</button></a></td>
+    {/if}
+  </tr>
+  {/section}
+</table>
+<div id="pagenav">{$pagenav}</div>
+</div>
+{include file="footer.tpl.html"}

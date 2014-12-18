@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>分单打印</title>
+<script type="text/javascript" src="common/jquery-1.10.2.js"></script>
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("button#print").click(function(){
+        $("div#hide").hide();
+    });
+});
+</script>
+{/literal}
+<style type="text/css">
+body {
+margin:0;font-family:Arial, 黑体, "MS UI Gothic",sans-serif, Helvetica;font-size:12px;
+}
+#depar {
+position:absolute;left:{$depar1}px;top:{$depar2}px;}
+#desti {
+position:absolute;left:{$desti1}px;top:{$desti2}px;}
+#mawb {
+position:absolute;left:{$mawb1}px;top:{$mawb2}px;}
+#dest {
+position:absolute;left:{$dest1}px;top:{$dest2}px;}
+#flt {
+position:absolute;left:{$flt1}px;top:{$flt2}px;}
+#consignee {
+position:absolute;left:{$consignee1}px;top:{$consignee2}px;}
+#notify {
+position:absolute;left:{$notify1}px;top:{$notify2}px;}
+#shipper {
+position:absolute;left:{$shipper1}px;top:{$shipper2}px;}
+#prtdate {
+position:absolute;left:{$prtdate1}px;top:{$prtdate2}px;}
+#sha {
+position:absolute;left:{$sha1}px;top:{$sha2}px;}
+#agent {
+position:absolute;left:{$agent1}px;top:{$agent2}px;}
+#curr {
+position:absolute;left:{$curr1}px;top:{$curr2}px;}
+#paymt {
+position:absolute;left:{$paymt1}px;top:{$paymt2}px;}
+#nvd {
+position:absolute;left:{$nvd1}px;top:{$nvd2}px;}
+#case {
+position:absolute;left:{$case1}px;top:{$case2}px;}
+#num {
+position:absolute;left:{$num1}px;top:{$num2}px;}
+#gw {
+position:absolute;left:{$gw1}px;top:{$gw2}px;}
+#kg {
+position:absolute;left:{$kg1}px;top:{$kg2}px;}
+#rclass {
+position:absolute;left:{$rclass1}px;top:{$rclass2}px;}
+#cw {
+position:absolute;left:{$cw1}px;top:{$cw2}px;}
+#farrange {
+position:absolute;left:{$farrange1}px;top:{$farrange2}px;}
+#special {
+position:absolute;left:{$special1}px;top:{$special2}px;}
+#cgodescp {
+position:absolute;left:{$cgodescp1}px;top:{$cgodescp2}px;}
+#cbm {
+position:absolute;left:{$cbm1}px;top:{$cbm2}px;}
+</style>
+</head>
+<body>
+<div id="hide">
+<a href='javascript:window.print()'><button id="print">打印{$rexcom}</button></a>
+</div>
+<div id="depar">{$depar}</div>
+<div id="desti">{$desti}</div>
+<div id="mawb">{$mawb}</div>
+<div id="dest">{$dest}</div>
+<div id="flt">{$flt}</div>
+<div id="consignee">{$consignee}</div>
+<div id="notify">{$notify}</div>
+<div id="shipper">{$shipper}</div>
+<div id="prtdate">{$prtdate}</div>
+<div id="sha">{$sha}</div>
+<div id="agent">{$agent}</div>
+<div id="curr">{$curr}</div>
+<div id="paymt">{$paymtli}</div>
+<div id="nvd">{$nvd}</div>
+<div id="case">{$package}</div>
+<div id="num">{$num}</div>
+<div id="gw">{$gw}</div>
+<div id="kg">{$kg}</div>
+<div id="rclass">{$rclass}</div>
+<div id="cw">{$cw}</div>
+<div id="special">{$special}</div>
+<div id="farrange">{$farrange}</div>
+<div id="cgodescp">{$cgodescp}</div>
+<div id="cbm">{$cbm}</div>
+</body>
+</html>
