@@ -19,13 +19,19 @@ $firstday = date('Y-m-d', mktime(0,0,0,date('n'),1,date('Y')));  //本月第一�
 $lastday = date('Y-m-d', mktime(0,0,0,date('n'),date('t'),date('Y')));  //本月最后一天
 $thisyear = date('Y');  //当前年份
 $thismonth = date('m');  //当前月份
-$nextmonth = $thismonth+1;  //下月
 //sql查询语句，从分单数据表中查询并汇总数据
 $filt_sql="select `fltdate`,sum(`sumgw`) as `sumgw`,sum(`sumcw`) as `sumcw`,sum(`sumcbm`) as `sumcbm`,count(`hawb`) as `sumhawb`,count(distinct `mawb`) as `summawb`,`forward` as `forward`,`carrier` as `carrier` from `exp_v_qty` where `fltdate`!=''";
 //通过查询表单附加查询条件
 if($_POST[thismonth]!="")
 {
-    $filt_sql.=" && fltdate>='".$_POST[thisyear].".".$_POST[thismonth].".01 00:00:00' &&  fltdate<'".$_POST[thisyear].".".($_POST[thismonth]+1).".01 00:00:00'";
+    if($_POST[thismonth]!=12){
+        $fltdate_end=$_POST[thisyear].".".($_POST[thismonth]+1);
+    }else{
+		$nextyear=$_POST[thisyear]+1;
+        $fltdate_end=$nextyear.".01";
+    }
+	$thisyear=$_POST[thisyear];
+    $filt_sql.=" && fltdate>='".$_POST[thisyear].".".$_POST[thismonth].".01 00:00:00' &&  fltdate<'".$fltdate_end.".01 00:00:00'";
     $thismonth=$_POST[thismonth];
 }else{  //默认统计本月货量
     $filt_sql.=" && fltdate>='".$firstday." 00:00:00' && fltdate<='".$lastday." 23:59:59'";
@@ -48,9 +54,9 @@ if($_POST[s_carrier]!=""){  //若承运人不为空，附加查询条件：匹�
 }
 
 //循环从1到当前月最后一天
-for($i=1;$i<=date('t', mktime(0,0,0,$thismonth,1,date('Y')));$i++){
+for($i=1;$i<=date('t', mktime(0,0,0,$thismonth,1,$thisyear));$i++){
     //按日期分组汇总查询
-    $limit_sql=$filt_sql." && fltdate='".date('Y-m-d', mktime(0,0,0,$thismonth,$i,date('Y')))."'"." group by `fltdate` order by `fltdate` asc";
+    $limit_sql=$filt_sql." && fltdate='".date('Y-m-d', mktime(0,0,0,$thismonth,$i,$thisyear))."'"." group by `fltdate` order by `fltdate` asc";
     $mlist=$db->query($limit_sql);
     while ($row = $db->fetch_array($mlist)){
       $m_list[] = array(
