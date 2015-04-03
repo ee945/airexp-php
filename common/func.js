@@ -52,7 +52,7 @@ function show_menuC(){
 function ismawb(){
 	mawb=document.getElementById('mawb').value;
 	if(document.getElementById('mawb').value!=""){
-		if(mawb.substr(3,1)!="-"){
+		if(mawb.substr(3,1)!="-"||mawb.length!=12){
 			alert("Error Format");
 			document.getElementById('mawb').focus();
 		}else if(mawb.substr(4,8)!=""){
